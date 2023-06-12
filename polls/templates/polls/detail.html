@@ -1,0 +1,45 @@
+<style>
+    body{
+        background: azure;
+    }
+
+    input {
+        margin-top: 1em;
+    }
+
+    input{
+    --button:azure;
+    --button-hover: blue;
+    padding: .9rem 1.7rem;
+    color: black;
+    font-weight: 500;
+    font-size: 2srem;
+    transition: all 0.3s ease-in-out;
+    background: var(--button);
+    border-radius: 5px;
+  }
+  
+  input:hover {
+    text-decoration: none;
+    background: var(--button-hover);
+    box-shadow: inset 0 0 0 4px var(--colour-white);
+  }
+
+
+  
+</style>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p style="color: red"><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+</form>

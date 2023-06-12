@@ -1,0 +1,29 @@
+<style>
+  .pie {
+  margin: 5vmin auto;
+  border-radius: 50%;
+  width: 20vw;
+  height: 20vw;
+  background: linear-gradient(-21deg, #2196f3 50%, transparent 50%), linear-gradient(to right, #2196f3 50%, #ffc107 50%);
+}
+
+.html {
+  margin: 20vmin 0 0 50vmin;
+}
+
+.css {
+  margin: 33vmin;
+}
+</style>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}"><button tyle="--c: #373B44;--b: 5px;--s:12px">Vote again?</button></a>
